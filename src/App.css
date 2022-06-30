@@ -1,13 +1,19 @@
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 .chessboard{
+  width: 800px;
   display: grid;
-  grid-template-columns: repeat(8, 60px);
-  
+  grid-template-columns: repeat(8, 100px);
+  grid-template-rows: repeat(8, 100px);
 }
 .field{
-  height: 50px;
-  width: 50px;
-  background-color: aqua;
+  height: 100px;
+  width: 100px;
+  background-color: burlywood;
+  border: 2px solid;
+}
+.king, .rook, .bishop, .knight, .pawn, .queen{
+  height: 100px;
 }
