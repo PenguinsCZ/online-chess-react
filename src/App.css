@@ -17,3 +17,10 @@
 .king, .rook, .bishop, .knight, .pawn, .queen{
   height: 100px;
 }
+.aimedat{
+  border-radius: 50%;
+  background-color: rgba(169,169,169, 0.30);
+  height: 100px;
+  width: 100px;
+  z-index: 4;
+  }
