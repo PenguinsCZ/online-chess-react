@@ -1,8 +1,16 @@
-import rookpic from "../Assets/Chess_rdt45.svg"
-
+import rookpicblack from "../Assets/Chess_rdt45.svg"
+import rookpicwhite from "../Assets/Chess_rlt45.svg"
 
 function Rook(props) {
-    return (<img src={rookpic} className="rook" onClick={() => props.moves("rook", props.position)}></img> );
+    function getRookPic(){
+        if(props.color === "white"){
+            return rookpicwhite
+        }
+        else{
+            return rookpicblack
+        }
+    }
+    return (<img src={getRookPic()} className="rook" onClick={() => props.moves("rook", props.position)}></img> );
 }
 
 export default Rook;

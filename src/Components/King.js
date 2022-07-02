@@ -1,8 +1,17 @@
-import kingpic from "../Assets/Chess_kdt45.svg"
+import kingpicblack from "../Assets/Chess_kdt45.svg"
+import kingpicwhite from "../Assets/Chess_klt45.svg"
 import "../App.css"
 
 function King(props) {
-    return (<img src={kingpic} className="king" onClick={() => props.moves("king", props.position)}></img> );
+    function getKingPic(){
+        if(props.color === "white"){
+            return kingpicwhite
+        }
+        else{
+            return kingpicblack
+        }
+    }
+    return (<img src={getKingPic()} className="king" onClick={() => props.moves("king", props.position)}></img> );
 }
 
 export default King;
