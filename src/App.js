@@ -1,5 +1,3 @@
-import King from "./Components/King.js"
-import Rook from "./Components/Rook.js";
 import Field from "./Components/Field.js"
 import './App.css';
 import { useState } from "react";
@@ -14,10 +12,16 @@ function App() {
   const rowSeven = [49,50,51,52,53,54,55,56]
   const rowEight = [57,58,59,60,61,62,63,64]
   
+
+
+  //--------------------------- SHOW MOVES ----------------------------//
   function showMoves(piece, position){
     
     const positions = calculateMoves(piece, position)
     let newarray = fields
+    newarray.map(
+      x => {x.aimedAt = false}
+    )
     positions.map(x =>
         {newarray[x - 1].aimedAt = true
         
@@ -26,8 +30,12 @@ function App() {
     movement([...newarray])
   }
 
+
+
+  //---------------------- CALCULATE MOVES ---------------------------//
   function calculateMoves(piece, position){
     
+
     if(piece === "rook"){
       let possiblePositions = []
       for (let i = position; i <= 64; i += 8){
@@ -48,14 +56,46 @@ function App() {
       
       return filteredarray
     }
+
+
+    else if(piece === "king"){
+      let possiblePositions = []
+      const row = getRow(position)
+      if(position > row[0]){possiblePositions.push(position - 1)}
+      if(position  < row[row.length - 1]){possiblePositions.push(position + 1)}
+      if(position + 7 > row[row.length - 1] && row !== rowEight){possiblePositions.push(position + 7)}
+      if(row !== rowEight){possiblePositions.push(position + 8)}
+      if(position !== row[row.length - 1] && row !== rowEight){possiblePositions.push(position + 9)}
+      if(position !== row[0] && row !== rowOne){possiblePositions.push(position - 9)}
+      if(row !== rowOne){possiblePositions.push(position - 8)}
+      if(position -7 < row[0] && row !== rowOne){possiblePositions.push(position - 7)}
+
+      return possiblePositions
+    }
   }
 
+
+
+  //---------------------- GET ROW ---------------------------//
+  function getRow(position){
+    if(position < 9){return rowOne}
+      else if(position < 17){return rowTwo}
+      else if(position < 25){return rowThree }
+      else if(position < 33){return rowFour}
+      else if(position < 41){return rowFive}
+      else if(position < 49){return rowSix}
+      else if(position < 57){return rowSeven}
+      else{return rowEight}
+  }
+
+
+
+
+  //-------------------------- MOVE -------------------------------//
   const[selectedPosition, rememberPosition] = useState()
 
   function move(positionValue){
-    console.log(positionValue)
-    console.log(selectedPosition)
-    console.log(fields[selectedPosition - 1].figure)
+    
     let newarray = fields
     newarray[positionValue - 1].figure = fields[selectedPosition - 1].figure
     newarray[selectedPosition - 1].figure = "empty"
@@ -63,10 +103,12 @@ function App() {
       x => x.aimedAt = false
     )
     movement([...newarray])
-    console.log(newarray)
+    
   }
 
 
+
+  //--------------------------- FIELDS ---------------------------//
   const[fields, movement] = useState(
     
       [{figure: "empty", aimedAt: false},
