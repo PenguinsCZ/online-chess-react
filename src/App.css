@@ -16,6 +16,7 @@
 }
 .king, .rook, .bishop, .knight, .pawn, .queen{
   height: 100px;
+  position: absolute;
 }
 .aimedat{
   border-radius: 50%;
@@ -23,4 +24,5 @@
   height: 100px;
   width: 100px;
   z-index: 4;
+  position: absolute;
   }

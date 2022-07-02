@@ -13,17 +13,16 @@ function App() {
   const rowSix = [41,42,43,44,45,46,47,48]
   const rowSeven = [49,50,51,52,53,54,55,56]
   const rowEight = [57,58,59,60,61,62,63,64]
+  
   function showMoves(piece, position){
     
     const positions = calculateMoves(piece, position)
     let newarray = fields
-    console.log(positions)
     positions.map(x =>
         {newarray[x - 1].aimedAt = true
-        console.log("x")
+        
     })
-
-    
+    rememberPosition(position)
     movement([...newarray])
   }
 
@@ -45,11 +44,28 @@ function App() {
       else if(position < 49){possiblePositions = possiblePositions.concat(rowSix)}
       else if(position < 57){possiblePositions = possiblePositions.concat(rowSeven)}
       else{possiblePositions = possiblePositions.concat(rowEight)}
-
-
-      return possiblePositions
+      const filteredarray = possiblePositions.filter(function(e) { return e !== position })
+      
+      return filteredarray
     }
   }
+
+  const[selectedPosition, rememberPosition] = useState()
+
+  function move(positionValue){
+    console.log(positionValue)
+    console.log(selectedPosition)
+    console.log(fields[selectedPosition - 1].figure)
+    let newarray = fields
+    newarray[positionValue - 1].figure = fields[selectedPosition - 1].figure
+    newarray[selectedPosition - 1].figure = "empty"
+    newarray.forEach(
+      x => x.aimedAt = false
+    )
+    movement([...newarray])
+    console.log(newarray)
+  }
+
 
   const[fields, movement] = useState(
     
@@ -70,7 +86,7 @@ function App() {
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
-      {figure: "empty", aimedAt: false},
+      {figure: "rook", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
@@ -124,7 +140,7 @@ function App() {
   return (
     <div className="App">
       <div className='chessboard'>
-        {fields.map((x) => <Field figuree={x.figure} aimedAt={x.aimedAt} move={showMoves} position={fields.indexOf(x) + 1}/>)}
+        {fields.map((x) => <Field figuree={x.figure} aimedAt={x.aimedAt} move={showMoves} moveTo={move} position={fields.indexOf(x) + 1}/>)}
       </div></div>
   );
 }

@@ -8,7 +8,7 @@ function Field(props) {
             return <Rook moves={props.move} position={props.position}/>
         }
         if(figurestring === "king"){
-            return <King/>
+            return <King moves={props.move} position={props.position}/>
         }
         else{
             return <></>
@@ -16,7 +16,7 @@ function Field(props) {
     }
 
     return ( <div className="field">{getFigure(props.figuree)}
-    <div className={props.aimedAt ? "aimedat" : ""}></div></div> );
+    <div className={props.aimedAt ? "aimedat" : ""} onClick={() => props.moveTo(props.position, props.figuree)}></div></div> );
 }
 
 export default Field;
