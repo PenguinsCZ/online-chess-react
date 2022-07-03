@@ -15,9 +15,9 @@ function App() {
 
 
   //--------------------------- SHOW MOVES ----------------------------//
-  function showMoves(piece, position){
+  function showMoves(piece, position, color){
     
-    const positions = calculateMoves(piece, position)
+    const positions = calculateMoves(piece, position, color)
     let newarray = fields
     newarray.map(
       x => {x.aimedAt = false}
@@ -33,25 +33,77 @@ function App() {
 
 
   //---------------------- CALCULATE MOVES ---------------------------//
-  function calculateMoves(piece, position){
-    
-
+  function calculateMoves(piece, position, color){
+    let x = false
     if(piece === "rook"){
       let possiblePositions = []
       for (let i = position; i <= 64; i += 8){
+        
+        if((fields[i-1].figure.slice(-5) === color && i !== position) || x){
+          break
+        }
+        else if((fields[i-1].figure.slice(-5) === "black" || fields[i-1].figure.slice(-5) === "white") && fields[i-1].figure.slice(-5) !== color){
+          x = true
+          possiblePositions.push(i)
+          
+        }
         possiblePositions.push(i)
+        
       }
       for (let i = position; i >= 1; i -= 8){
+        if(fields[i-1].figure.slice(-5) === color && i !== position){
+          break
+        }
         possiblePositions.push(i)
       }
-      if(position < 9){possiblePositions = possiblePositions.concat(rowOne)}
-      else if(position < 17){possiblePositions = possiblePositions.concat(rowTwo)}
-      else if(position < 25){possiblePositions = possiblePositions.concat(rowThree)}
-      else if(position < 33){possiblePositions = possiblePositions.concat(rowFour)}
-      else if(position < 41){possiblePositions = possiblePositions.concat(rowFive)}
-      else if(position < 49){possiblePositions = possiblePositions.concat(rowSix)}
-      else if(position < 57){possiblePositions = possiblePositions.concat(rowSeven)}
-      else{possiblePositions = possiblePositions.concat(rowEight)}
+      if(position < 9){for(let i = position; i <= 8; i++){
+        
+        if(fields[i-1].figure.slice(-5) === color && i !== position && x){break}
+        else if((fields[i-1].figure.slice(-5) === "black" || fields[i-1].figure.slice(-5) === "white") && fields[i-1].figure.slice(-5) !== color){
+          x = false
+          possiblePositions.push(rowOne[i-1])
+          
+        }
+        else{possiblePositions.push(rowOne[i-1])}}
+        
+        for(let i = position; i >= 1; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+        else{possiblePositions.push(rowOne[i-1])}}
+      }
+      else if(position < 17){for(let i = position; i <= 16; i++){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowTwo[i-9])}}
+      for(let i = position; i >= 9; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowTwo[i-9])}}
+      }
+      else if(position < 25){for(let i = position; i <= 24; i++){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowThree[i-17])}}
+      for(let i = position; i >= 17; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowThree[i-17])}}
+      }
+      else if(position < 33){for(let i = position; i <= 32; i++){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowFour[i-25])}}
+      for(let i = position; i >= 25; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowFour[i-25])}}
+      }
+      else if(position < 41){for(let i = position; i <= 40; i++){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowFive[i-33])}}
+      for(let i = position; i >= 33; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowFive[i-33])}}
+      }
+      else if(position < 49){for(let i = position; i <= 48; i++){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowSix[i-41])}}
+      for(let i = position; i >= 41; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowSix[i-41])}}
+      }
+      else if(position < 57){for(let i = position; i <= 56; i++){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowSeven[i-49])}}
+      for(let i = position; i >= 49; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowSeven[i-49])}}
+      }
+      else{for(let i = position; i <= 64; i++){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowEight[i-57])}}
+      for(let i = position; i >= 57; i--){if(fields[i-1].figure.slice(-5) === color && i !== position){break}
+      else{possiblePositions.push(rowEight[i-57])}}
+      }
       const filteredarray = possiblePositions.filter(function(e) { return e !== position })
       
       return filteredarray
@@ -124,7 +176,7 @@ function App() {
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
-      {figure: "empty", aimedAt: false},
+      {figure: "rook-black", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},

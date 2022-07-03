@@ -11,7 +11,7 @@ function King(props) {
             return kingpicblack
         }
     }
-    return (<img src={getKingPic()} className="king" onClick={() => props.moves("king", props.position)}></img> );
+    return (<img src={getKingPic()} className="king" onClick={() => props.moves("king", props.position, props.color)}></img> );
 }
 
 export default King;

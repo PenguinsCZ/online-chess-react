@@ -10,7 +10,7 @@ function Rook(props) {
             return rookpicblack
         }
     }
-    return (<img src={getRookPic()} className="rook" onClick={() => props.moves("rook", props.position)}></img> );
+    return (<img src={getRookPic()} className="rook" onClick={() => props.moves("rook", props.position, props.color)}></img> );
 }
 
 export default Rook;

@@ -21,7 +21,7 @@ function Field(props) {
         }
     }
 
-    return ( <div className="field">{getFigure(props.figuree)}
+    return ( <div className="field"><div className="absolute">{props.position}</div>{getFigure(props.figuree)}
     <div className={props.aimedAt ? "aimedat" : ""} onClick={() => props.moveTo(props.position, props.figuree)}></div></div> );
 }
 
