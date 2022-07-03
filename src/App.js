@@ -35,8 +35,14 @@ function App() {
   //---------------------- CALCULATE MOVES ---------------------------//
   function calculateMoves(piece, position, color){
     let x = false
+    let y = false
+
+
+    //----------------- ROOK -----------------------//
     if(piece === "rook"){
       let possiblePositions = []
+
+      //--------------------- ROOK VERTICAL ---------------------//
       for (let i = position; i <= 64; i += 8){
         
         if((fields[i-1].figure.slice(-5) === color && i !== position) || x){
@@ -51,11 +57,18 @@ function App() {
         
       }
       for (let i = position; i >= 1; i -= 8){
-        if(fields[i-1].figure.slice(-5) === color && i !== position){
+        if(fields[i-1].figure.slice(-5) === color && i !== position || y){
           break
+        }
+        else if((fields[i-1].figure.slice(-5) === "black" || fields[i-1].figure.slice(-5) === "white") && fields[i-1].figure.slice(-5) !== color){
+          y = true
+          possiblePositions.push(i)
+          
         }
         possiblePositions.push(i)
       }
+
+      //------------------- ROOK HORIZONTAL ---------------//
       if(position < 9){for(let i = position; i <= 8; i++){
         
         if(fields[i-1].figure.slice(-5) === color && i !== position && x){break}
@@ -113,14 +126,14 @@ function App() {
     else if(piece === "king"){
       let possiblePositions = []
       const row = getRow(position)
-      if(position > row[0]){possiblePositions.push(position - 1)}
-      if(position  < row[row.length - 1]){possiblePositions.push(position + 1)}
-      if(position + 7 > row[row.length - 1] && row !== rowEight){possiblePositions.push(position + 7)}
-      if(row !== rowEight){possiblePositions.push(position + 8)}
-      if(position !== row[row.length - 1] && row !== rowEight){possiblePositions.push(position + 9)}
-      if(position !== row[0] && row !== rowOne){possiblePositions.push(position - 9)}
-      if(row !== rowOne){possiblePositions.push(position - 8)}
-      if(position -7 < row[0] && row !== rowOne){possiblePositions.push(position - 7)}
+      if(position > row[0] && fields[position-2].figure.slice(-5) !== color){possiblePositions.push(position - 1)}
+      if(position  < row[row.length - 1]&& fields[position].figure.slice(-5) !== color){possiblePositions.push(position + 1)}
+      if(position + 7 > row[row.length - 1] && row !== rowEight && fields[position + 6].figure.slice(-5) !== color){possiblePositions.push(position + 7)}
+      if(row !== rowEight && fields[position + 7].figure.slice(-5) !== color){possiblePositions.push(position + 8)}
+      if(position !== row[row.length - 1] && row !== rowEight && fields[position + 8].figure.slice(-5) !== color){possiblePositions.push(position + 9)}
+      if(position !== row[0] && row !== rowOne && fields[position - 10].figure.slice(-5) !== color){possiblePositions.push(position - 9)}
+      if(row !== rowOne && fields[position - 9].figure.slice(-5) !== color){possiblePositions.push(position - 8)}
+      if(position -7 < row[0] && row !== rowOne && fields[position-8].figure.slice(-5) !== color){possiblePositions.push(position - 7)}
 
       return possiblePositions
     }
