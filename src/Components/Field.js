@@ -1,4 +1,5 @@
 import King from "./King.js"
+import Knight from "./Knight.js";
 import Rook from "./Rook.js";
 
 function Field(props) {
@@ -15,6 +16,12 @@ function Field(props) {
         }
         if(figurestring === "king-white"){
             return <King moves={props.move} position={props.position}  color={"white"}/>
+        }
+        if(figurestring === "knight-black"){
+            return <Knight moves={props.move} position={props.position} color={"black"}/>
+        }
+        if(figurestring === "knight-white"){
+            return <Knight moves={props.move} position={props.position}  color={"white"}/>
         }
         else{
             return <></>

@@ -123,6 +123,9 @@ function App() {
     }
 
 
+
+
+      // --------------------------------- KING --------------------------------//
     else if(piece === "king"){
       let possiblePositions = []
       const row = getRow(position)
@@ -137,9 +140,23 @@ function App() {
 
       return possiblePositions
     }
+  
+
+  else if(piece === "knight"){
+    let possiblePositions = []
+      const row = getRow(position)
+      if(position > row[0] && position > 17 && fields[position-18].figure.slice(-5) !== color){possiblePositions.push(position - 17)}
+      if(position  < row[row.length - 1] && position > 17 && fields[position-16].figure.slice(-5) !== color){possiblePositions.push(position - 15)}
+      if(position - 6 <= row[row.length - 1] - 8 && row !== rowOne && fields[position - 7].figure.slice(-5) !== color){possiblePositions.push(position - 6)}
+      if(row !== rowEight && row[row.length - 1] + 8 > position + 9 && fields[position + 9].figure.slice(-5) !== color){possiblePositions.push(position + 10)}
+      if(position < 48 && position < row[row.length - 1] && fields[position + 16].figure.slice(-5) !== color){possiblePositions.push(position + 17)}
+      if(position < 49 && position > row[0] && fields[position + 14].figure.slice(-5) !== color){possiblePositions.push(position + 15)}
+      if(row !== rowEight && position > row[1] && fields[position + 5].figure.slice(-5) !== color){possiblePositions.push(position + 6)}
+      if(position > row[1] && row !== rowOne && fields[position-11].figure.slice(-5) !== color){possiblePositions.push(position - 10)}
+
+      return possiblePositions
   }
-
-
+  }
 
   //---------------------- GET ROW ---------------------------//
   function getRow(position){
@@ -208,6 +225,7 @@ function App() {
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
+      {figure: "knight-black", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
@@ -218,8 +236,7 @@ function App() {
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
-      {figure: "empty", aimedAt: false},
-      {figure: "empty", aimedAt: false},
+      {figure: "knight-white", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
       {figure: "empty", aimedAt: false},
